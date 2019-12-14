@@ -8,7 +8,11 @@ ax.set_title('Um histograma')
 ax.set_xlabel('Idade')
 ax.set_ylabel('Quantidade')
 
-idades = np.random.normal(30,5, size=200).astype(int)
+#Distribuição normal
+#idades = np.random.normal(30,5, size=200).astype(int)
+#Distribuição exponencial
+idades = np.random.exponential(1, size=200)
+
 ax.hist(idades)
 
 plt.savefig('./grafico.png')
