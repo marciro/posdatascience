@@ -10,7 +10,8 @@ mpg2 <- transmute(mpg, manufacturer = manufacturer,
           fuel_type = fl,
           class = class,
           city_miles_per_gallon = cty,
-          highway_miles_per_gallon = hwy)
+          highway_miles_per_gallon = hwy,
+          engine_displacement = displ)
 
 view(mpg2,title = 'dados')
 
@@ -51,9 +52,31 @@ mpg2 %>% group_by(manufacturer) %>%
 mpg2 %>%
   group_by(drive)%>%
   ggplot(aes(city_miles_per_gallon))+
-  geom_histogram(bins=30) + facet_wrap(~drive)
+  geom_density(bins=30) +  facet_grid(fuel_type ~ drive)
+  #facet_wrap(~drive)
 
 #Facet wrap - Quebra por categoria (quando é tibble é agrupado)
-  
+
+
+
+library(modelr)
+
+modelo <- lm(city_miles_per_gallon ~ engine_displacement, mpg2)
+
+modelo$coefficients
+
+mpg2 <- mpg2 %>%
+  add_predictions(modelo)
+
+mpg2 %>% 
+  ggplot(aes(engine_displacement))+
+  geom_point(aes(y=city_miles_per_gallon),color = "red")+
+  geom_point(aes(y=pred), color ="green")+
+  facet_wrap(~drive)
+
+# Análise residual
+
+mpg2 %>%
+  ggplot(aes(city_miles_per_gallon))
 
 
