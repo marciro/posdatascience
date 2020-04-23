@@ -24,7 +24,6 @@ def create_cards(r):
         print("Gerando o cartão: " +"card:"+str(i))
         card = r.srandmember("set:numbers", 15)
         print("Números escolhidos: "+str(card))
-
         for j in range (0,14):
             print("Adicionando "+str(card[j]))
             r.sadd("card:"+str(i),card[j])
@@ -53,18 +52,40 @@ def create_players(redis):
 
 
 def theres_winner(redis):
+    for i in range(1,50):
+        player_score = redis.get("player:"+str(i)+":score")
+        print("Verificando score do jogador:"+str(player_score))
+        if player_score is not None and int(player_score) == 15:
+            print("Encontardo o vencedor:"+"player:"+str(i))
+            redis.set("winner", "player:"+str(i))
+            return True
+    return False
 
 
+def check_score(redis,number_drawed):
+    for i in range(1,50):
+        card = redis.hget("player:"+str(i),"card")
+        cardNumbers = redis.smembers(card)
+        if number_drawed in cardNumbers:
+            print("Número encontrado na cartela "+str(card)+": "+str(number_drawed))
+            redis.incr("player:"+str(i)+":score",1)
+            # Adicionar no score do jogador - Usar incr
 
 
-    pass
+def draw_number(redis):
+    return redis.spop("set:numbers")
 
 
 def start_game(redis):
     # Enquanto não houver vencendor, sortear um número
     # Percorrer todas as cartelas e adicionar no score de cada jogador caso tenha o número em sua cartela
     # O jogador que alcançar o score de 15 primeiro é o vencedor.
-    while(theres_winner(redis)):
+    while(not theres_winner(redis)):
+        number_drawed = draw_number(redis)
+        print(number_drawed)
+        check_score(redis,number_drawed)
+        
+        
 
 
 
@@ -78,16 +99,7 @@ def main():
     create_players(redis)
     # Iniciar o jogo
     start_game(redis)
-
-    # Associar a cada jogador uma cartela e criar uma estrutura de jogo contendo o nome do jogador, sua cartela e o score
-    # Iniciar o jogo gerando o conjunto de números sorteados e percorrendo cada cartela de cada jogador e pontuando no score
-    # cada acerto. Quem acertar os 15 números é o vencendor.
-
-
-    #card_37 = redis.smembers("card:37")
-    #print(card_37)
-    #print(card_37)
-
+    print(redis.get("winner"))
 
 
 main()
