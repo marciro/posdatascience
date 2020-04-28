@@ -84,28 +84,82 @@
 
 9. **Liste as pessoas que tem o mesmo nome que seu bichano (gatou ou cachorro).**
 
-	`db.italians.aggregate([{'$match'}])`
-
+	`db.italians.aggregate([{$match: {'cat':{$exists:1}}}, {$project: {"firstname":1,"cat.name":1,"isEqual":{"$cmp":["$firstname","$cat.name"]}}}, {$match: {"isEqual":0}}])`
+	`db.italians.aggregate([{$match: {'dog':{$exists:1}}}, {$project: {"firstname":1,"dog.name":1,"isEqual":{"$cmp":["$firstname","$dog.name"]}}}, {$match: {"isEqual":0}}])`
+	
 10. **Projete apenas o nome e sobrenome das pessoas com tipo de sangue de fator RH negativo.**
+	`db.italians.find({"bloodType":{"$eq":"B-"}},{"firstname":1,"surname":1,"bloodType":1})`
 
 11.**Projete apenas os animais dos italianos. Devem ser listados os animais com nome e idade. Não mostre o identificado do mongo (ObjectId).**
+	
+	`db.italians.find({},{"cat.name":1,"cat.age":1,"dog.name":1,"dog.age":1,"_id":0})`
 
 12. **Quais são as 5 pessoas mais velhas com sobrenome Rossi?**
 
+	`db.italians.find({"surname":{"$eq":"Rossi"}},{"_id":0,"firstname":1,"surname":1,"age":1}).limit(5).sort({"age":-1})`
+
 13. **Crie um italiano que tenha um leão como animal de estimação. Associe um nome e idade ao bichano.**
 
-14. **Infelizmente o Leão comeu o italiano. Remova essa pessoa usando o Id.**
+	`db.italians.insert({"firstname":"Luciano","surname":"Pavarotti","username":"pavaluci32","age":68,"email":"luciano.pavarotti@uol.com.br","bloodType":"A+","id_num":"733732696169","lion":{"name":"Simba","age":17}}`
 
+14. **Infelizmente o Leão comeu o italiano. Remova essa pessoa usando o Id.**
+	
+	`db.italians.remove({"_id":ObjectId("5ea87e38a30ed235b0a545c3")})`
+	
 15. **Passou um ano. Atualize a idade de todos os italianos e dos bichanos em 1.**
 
+	`db.italians.update({}, {$inc: { age: 1}}, { multi: true })`
+	`db.italians.update({"cat":{"$exists":1}}, {$inc: { "cat.age": 1}}, { multi: true })`
+	`db.italians.update({"dog":{"$exists":1}}, {$inc: { "dog.age": 1}}, { multi: true })`
+
 16. **O Corona Vírus chegou na Itália e misteriosamente atingiu pessoas somente com gatos e de 66 anos. Remova esses italianos.**
+	
+	`db.italians.remove({"$and":[{"age":66},{"cat":{"$exists":1}}]})`
 
 17. **Utilizando o framework agregate, liste apenas as pessoas com nomes iguais a sua respectiva mãe e que tenha gato ou cachorro.**
 
+	`db.italians.aggregate([ {'$match': { mother: { $exists: 1} }}, {'$match': { $or: [ {cat: {$exists: 1}}, {dog: {$exists: 1}}]}},{'$project': { "firstname": 1, "mother": 1, "isEqual": { "$cmp": ["$firstname","$mother.firstname"]} }}, {'$match': {"isEqual": 0}} ])`
+
 18. **Utilizando aggregate framework, faça uma lista de nomes única de nomes. Faça isso usando apenas o primeiro nome.**
+	
+	`db.italians.aggregate([{$group:{ _id:"$firstname"}}])`
+	
 
 19. **Agora faça a mesma lista do item acima, considerando nome completo.**
 
+	`db.italians.aggregate([{$group: {_id: {"$concat": ["$firstname", " ", "$surname"]}}}])`
+	
 20. **Procure pessoas que gosta de Banana ou Maçã, tenham cachorro ou gato, mais de 20 e menos de 60 anos.**
+
+	`db.italians.find({ $and:[{"age": { "$gt": 20, "$lt": 60 }}, {$or: [{ dog: {$exists: true}}, {cat: {$exists: true}}]}, { $or: [ {favFruits: ["Banana"]}, {favFruits: ["Maçã"]}]} ]})`
+	
+	
+### Exercício 3
+
+1. **Liste as ações com profit acima de 0.5 (limite a 10 o resultado).**
+	
+	`db.stocks.find( { "Profit Margin": { "$gt": 0.5 } },{"_id":0,"Ticker":1,"Country":1, "Profit Margin":1} ).limit(10)`
+
+2. **Liste as ações com perdas (limite a 10 novamente).**
+	
+	`db.stocks.find( { "Profit Margin": { "$lt": 0 } },{"_id":0,"Ticker":1,"Country":1, "Profit Margin":1}).limit(10)`
+	
+3. **Liste as 10 ações mais rentáveis.**
+	
+	`db.stocks.find({},{"_id":0,"Ticker":1,"Country":1,"Profit Margin":1}).limit(10).sort({"Profit Margin":-1})`
+	
+4. **Qual foi o setor mais rentável?**
+	`db.stocks.find({},{"Sector":1}).limit(1).sort({"Profit Margin":-1})`
+	
+5. **Ordene as ações pelo profit e usando um cursor, liste as ações.**
+	var stockCursor = db.stocks.find({"Profit Margin":{"$exists":1}},{"_id":0,"Ticker":1,"Country":1,"Profit Margin":1}).sort({ "Profit Margin": -1 });stockCursor.forEach(function(x){printjson(x);});
+
+6. **Renomeie o campo “Profit Margin” para apenas “profit”.**
+
+7. **Agora liste apenas a empresa e seu respectivo resultado.**
+
+8. **Analise as ações. É uma bola de cristal na sua mão... Quais as três ações você investiria?
+
+9. **Liste as ações agrupadas por setor**
 
 	
