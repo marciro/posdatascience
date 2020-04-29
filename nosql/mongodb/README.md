@@ -152,14 +152,21 @@
 	`db.stocks.find({},{"Sector":1}).limit(1).sort({"Profit Margin":-1})`
 	
 5. **Ordene as ações pelo profit e usando um cursor, liste as ações.**
-	var stockCursor = db.stocks.find({"Profit Margin":{"$exists":1}},{"_id":0,"Ticker":1,"Country":1,"Profit Margin":1}).sort({ "Profit Margin": -1 });stockCursor.forEach(function(x){printjson(x);});
+	`var stockCursor = db.stocks.find({"Profit Margin":{"$exists":1}},{"_id":0,"Ticker":1,"Country":1,"Profit Margin":1}).sort({ "Profit Margin": -1 });stockCursor.forEach(function(x){print(JSON.stringify(x, null, 2));});`
 
 6. **Renomeie o campo “Profit Margin” para apenas “profit”.**
-
+	`db.stocks.update({"Profit Margin": {$exists: true}}, {$rename:{"Profit Margin":"profit"}}, false, true)`
+	
 7. **Agora liste apenas a empresa e seu respectivo resultado.**
-
+	`db.stocks.find({}, {"Ticker":1,"Company": 1,"profit": 1})` 
+	
 8. **Analise as ações. É uma bola de cristal na sua mão... Quais as três ações você investiria?
-
+	`db.stocks.find({},{"_id":1,"Ticker":1,"Country":1,"Profit Margin":1}).limit(3).sort({"Profit Margin":-1})`
+	
+	`{ "_id" : ObjectId("52853800bb1177ca391c1801"), "Ticker" : "AADR", "Country" : "USA" }`
+	`{ "_id" : ObjectId("52853800bb1177ca391c1802"), "Ticker" : "AAIT", "Country" : "USA" }`
+	`{ "_id" : ObjectId("52853800bb1177ca391c1800"), "Ticker" : "AA", "Country" : "USA" }`
+	
 9. **Liste as ações agrupadas por setor**
-
+	`db.stocks.aggregate([{ "$sort" : { "Sector" : 1}},{'$project': { "Sector": 1, "Ticker": 1,"Company": 1}}])`
 	
