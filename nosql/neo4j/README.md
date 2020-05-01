@@ -10,9 +10,9 @@
 
 **Exercise 1.2: Examine the data model for the graph.**
 
-	*Conforme visualizado na ferramenta:*
+	Conforme visualizado na ferramenta:
 	
-	![Exercise 1.2](https://raw.githubusercontent.com/marciro/posdatascience/master/nosql/neo4j/exercicio_1_2.png)
+	![Exercise 1_2](https://raw.githubusercontent.com/marciro/posdatascience/master/nosql/neo4j/exercicio_1_2.png)
 	
 	
 **Exercise 1.3: Retrieve all Person nodes.**
