@@ -54,6 +54,11 @@
 
 **Exercise 3.1: Display the schema of the database.**
 
+`call db.schema.visualization()`
+
+*Conforme visualizado na ferramenta:*
+![Exercise_3_1](images/exercicio_3_1.png)
+
 **Exercise 3.2: Retrieve all people who wrote the movie Speed Racer.**
 
 **Exercise 3.3: Retrieve all movies that are connected to the person,Tom Hanks.**
