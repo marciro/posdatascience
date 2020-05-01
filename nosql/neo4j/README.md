@@ -61,10 +61,36 @@
 
 **Exercise 3.2: Retrieve all people who wrote the movie Speed Racer.**
 
+`match (p:Person)-[:WROTE]->(m:Movie{title:'Speed Racer'}) return p`
+
 **Exercise 3.3: Retrieve all movies that are connected to the person,Tom Hanks.**
+
+`match (m:Movie)<--(:Person{name:'Tom Hanks'}) return m`
 
 **Exercise 3.4: Retrieve information about the relationships Tom Hanks had with the set of movies retrieved earlier.**
 
+`match (m:Movie)<-[r]-(:Person{name:'Tom Hanks'}) return distinct type(r)`
+
 **Exercise 3.5: Retrieve information about the roles that Tom Hanks acted in.**
 
+`match (m:Movie)<-[:ACTED_IN]-(:Person{name:'Tom Hanks'}) return m.title, m.role`
 
+
+### Exercício 4
+
+
+**Exercise 4.1: Retrieve all movies that Tom Cruise acted in.**
+
+`match (p:Person)-[:ACTED_IN]->(m:Movie) where p.name = 'Tom Cruise' return m`
+
+**Exercise 4.2: Retrieve all people that were born in the 70’s.**
+
+`match (p:Person) where  p.born >= 1970 and p.born < 1980 return p`
+
+**Exercise 4.3: Retrieve the actors who acted in the movie The Matrix who were born after 1960.**
+
+**Exercise 4.4: Retrieve all movies by testing the node label and a property.**
+
+**Exercise 4.5: Retrieve all people that wrote movies by testing the relationship between two nodes.**
+
+**Exercise 4.6: Retrieve all people in the graph that do not have a property.**
