@@ -10,10 +10,8 @@
 
 **Exercise 1.2: Examine the data model for the graph.**
 
-	Conforme visualizado na ferramenta:
-	
-	![Exercise 1_2](images/exercicio_1_2.png)
-	
+	*Conforme visualizado na ferramenta:*
+	![Exercise_1_2](images/exercicio_1_2.png)
 	
 **Exercise 1.3: Retrieve all Person nodes.**
 
