@@ -199,3 +199,7 @@
 **Exercise 6.5: Retrieve the top 5 ratings and their associated movies.**
 
  `MATCH (p:Person)-[r:REVIEWED]->(m:Movie) RETURN m.title, r.rating ORDER BY r.rating DESC LIMIT 5`
+
+**Exercise 6.6: Retrieve all actors that have not appeared in more than 3 movies.**
+
+`MATCH (p:Person)-[r:ACTED_IN]->(m:Movie) WITH p as Ator, count(r) AS Atuações, collect(m.title) as Filmes WHERE Atuações <= 3 RETURN Ator.name, Atuações, Filmes ORDER BY Atuações DESC`
