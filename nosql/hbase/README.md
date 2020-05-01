@@ -57,11 +57,11 @@
 	
 3. **Faça 5 alterações em um dos italianos.**
 
-	`put 'italians', '12', 'personal-data:name', 'Placido Domigo'`
-	`put 'italians', '12', 'personal-data:city', 'Madrid'`
-	`put 'italians', '12', 'personal-data:birthdate', '21/01/1941'`
-	`put 'italians', '12', 'professional-data:salary', '9999991'`
-	`put 'italians', '12', 'professional-data:work_experience', '28'`
+	`put 'italians', '12', 'personal-data:name', 'Placido Domigo'`  
+	`put 'italians', '12', 'personal-data:city', 'Madrid'`  
+	`put 'italians', '12', 'personal-data:birthdate', '21/01/1941'`  
+	`put 'italians', '12', 'professional-data:salary', '9999991'`  
+	`put 'italians', '12', 'professional-data:work_experience', '28'`  
 
 4. **Com o operador get, verifique como o HBase armazenou o histórico.**
 	
@@ -74,10 +74,10 @@
 	`1 row(s)`
 	`Took 0.0349 seconds`
 	
-	`get 'italians', '12', {COLUMN => 'personal-data:city', VERSIONS => 5}`
-	`get 'italians', '12', {COLUMN => 'personal-data:birthdate', VERSIONS => 5}`
-	`get 'italians', '12', {COLUMN => 'professional-data:salary', VERSIONS => 5}`
-	`get 'italians', '12', {COLUMN => 'professional-data:work_experience', VERSIONS => 5}`
+	`get 'italians', '12', {COLUMN => 'personal-data:city', VERSIONS => 5}`  
+	`get 'italians', '12', {COLUMN => 'personal-data:birthdate', VERSIONS => 5}`  
+	`get 'italians', '12', {COLUMN => 'professional-data:salary', VERSIONS => 5}`  
+	`get 'italians', '12', {COLUMN => 'professional-data:work_experience', VERSIONS => 5}`  
 
 5. **Utilize o scan para mostrar apenas o nome e profissão dos italianos.**
 
@@ -85,19 +85,19 @@
 	
 6. **Apague os italianos com row id ímpar.**
 	
-	`deleteall 'italians', '1'`
-	`deleteall 'italians', '3'`
-	`deleteall 'italians', '5'`
-	`deleteall 'italians', '7'`
-	`deleteall 'italians', '9'`
-	`deleteall 'italians', '11'`
+	`deleteall 'italians', '1'`  
+	`deleteall 'italians', '3'`  
+	`deleteall 'italians', '5'`  
+	`deleteall 'italians', '7'`  
+	`deleteall 'italians', '9'`  
+	`deleteall 'italians', '11'`  
 
 7. **Crie um contador de idade 55 para o italiano de row id 5.**
 	
-	`put 'italians', '5', 'personal-data:name', 'Zucchero Fornaciari'
+	`put 'italians', '5', 'personal-data:name', 'Zucchero Fornaciari'  
 	`put 'italians', '5', 'personal-data:city', 'Roncocesi' 	
-	`put 'italians', '5', 'personal-data:birthdate', '29/04/1965'
-	`incr 'italians','5', 'personal-data:age', 55
+	`put 'italians', '5', 'personal-data:birthdate', '29/04/1965'  
+	`incr 'italians','5', 'personal-data:age', 55  
 	
 	`hbase(main):002:0> put 'italians', '5', 'personal-data:name', 'Zucchero Fornaciari'`
 	`Took 0.0439 seconds`
@@ -115,7 +115,7 @@
 	
 8. **Incremente a idade do italiano em 1.**
 	
-	`incr 'italians', '5', 'personal-data:age'`
+	`incr 'italians', '5', 'personal-data:age'`  
 	
 	`hbase(main):007:0> incr 'italians', '5', 'personal-data:age'`
 	`COUNTER VALUE = 56`
