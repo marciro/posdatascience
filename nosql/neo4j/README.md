@@ -89,8 +89,68 @@
 
 **Exercise 4.3: Retrieve the actors who acted in the movie The Matrix who were born after 1960.**
 
+`match(p:Person)-[:ACTED_IN]->(m:Movie) where p.born > 1960 and m.title = 'The Matrix' return p`
+
 **Exercise 4.4: Retrieve all movies by testing the node label and a property.**
+
+`match(m) where m:Movie AND m.released > 1999 AND m.released<=2005 return m.title as TITULO, m.released as LANÇAMENTO ORDER BY m.released DESC`
 
 **Exercise 4.5: Retrieve all people that wrote movies by testing the relationship between two nodes.**
 
+`match(p:Person)-[r]->(m:Movie) where type(r) = 'WROTE'return p`
+
 **Exercise 4.6: Retrieve all people in the graph that do not have a property.**
+
+`match (p) where p:Person and not exists(p.height) RETURN p`
+
+**Exercise 4.7: Retrieve all people related to movies where the relationship has a property.**
+
+`match (p:Person)-[r]->(m:Movie) where exists(r.rating) and r.rating > 5 RETURN p`
+
+**Exercise 4.8: Retrieve all actors whose name begins with James.**
+
+`match (p) where p:Person and p.name STARTS with 'James' RETURN p`
+
+**Exercise 4.9: Retrieve all all REVIEW relationships from the graph with filtered results.**
+
+`match (:Person)-[r:REVIEWED]->(:Movie) WHERE r.rating >= 70 return r`
+
+**Exercise 4.10: Retrieve all people who have produced a movie, but have not directed a movie.**
+
+`match (p:Person)-[:PRODUCED]->(:Movie) WHERE NOT ((p)-[:DIRECTED]->(:Movie)) RETURN p`
+
+**Exercise 4.11: Retrieve the movies and their actors where one of the actors also directed the movie.**
+
+`match(m:Movie)<-[:ACTED_IN]-(p:Person) WHERE ((p)-[:DIRECTED]->(m)) return m,p`
+
+**Exercise 4.12: Retrieve all movies that were released in a set of years.**
+
+`match(m) WHERE m:Movie AND  m.released > 1999 AND m.released<=2005 return m`
+
+**Exercise 4.13: Retrieve the movies that have an actor’s role that is the name of the movie.**
+
+`match(m:Movie)<-[r:ACTED_IN]-(p:Person) WHERE m.title in r.roles return m,p`
+
+### Exercício 5
+
+**Exercise 5.1: Retrieve data using multiple MATCH patterns.**
+
+**Exercise 5.2: Retrieve particular nodes that have a relationship.**
+
+**Exercise 5.3: Modify the query to retrieve nodes that are exactly three hops away.**
+
+**Exercise 5.4: Modify the query to retrieve nodes that are one and two hops away.**
+
+**Exercise 5.5: Modify the query to retrieve particular nodes that are connected no matter how many hops are required.**
+
+**Exercise 5.6: Specify optional data to be retrieved during the query.**
+
+**Exercise 5.7: Retrieve nodes by collecting a list.**
+
+**Exercise 5.9: Retrieve nodes as lists and return data associated with the corresponding lists.**
+
+**Exercise 5.10: Retrieve nodes and their relationships as lists.**
+
+**Exercise 5.11: Retrieve the actors who have acted in exactly five movies.**
+
+**Exercise 5.12: Retrieve the movies that have at least 2 directors with other optional data.**
