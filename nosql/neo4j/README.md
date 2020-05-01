@@ -223,3 +223,56 @@
 
 `MATCH (p:Person)-[:ACTED_IN]->(m:Movie) WHERE p.name = 'Keanu Reeves' AND m.title ='The Matrix' RETURN p.name,m.title, m.released, date().year-p.born  as IdadeAtualKeanuReeves, m.released-p.born AS IdadeKeanuReevesLancamento`
 
+
+### Exercício 8
+
+**Exercise 8.1: Create a Movie node.**
+
+`CREATE (:Movie {title: 'John Wick'})`
+
+**Exercise 8.2: Retrieve the newly-created node.**
+
+`MATCH (m:Movie) WHERE m.title = 'John Wick' RETURN m`
+
+**Exercise 8.3: Create a Person node.**
+
+`CREATE (:Person {name: 'Ian MacShane', born:1942})`
+
+**Exercise 8.4: Retrieve the newly-created node.**
+
+`MATCH (p:Person) WHERE p.name = 'Ian MacShane' RETURN p`
+
+**Exercise 8.5: Add a label to a node.**
+
+`MATCH (m:Movie)<-[r:REVIEWED]-(:Person) WHERE r.rating > 75   SET m:GoodMovie RETURN DISTINCT labels(m)`
+
+**Exercise 8.6: Retrieve the node using the new label.**
+
+`MATCH (m:GoodMovie) RETURN m.title, m.released`
+
+**Exercise 8.7: Add the Female label to selected nodes.**
+
+`MATCH (p:Person) WHERE p.name in ["Carrie-Anne Moss","Lana Wachowski","Charlize Theron","Demi Moore","Kelly McGillis","Meg Ryan","Renee Zellweger","Kelly Preston","Bonnie Hunt","Regina King"] SET p:Female`
+
+**Exercise 8.8: Retrieve all Female nodes.**
+
+`MATCH (p:Female) RETURN p.name, p.born`
+
+**Exercise 8.9: Remove the Female label from the nodes that have this label.**
+
+`MATCH (p:Female) REMOVE p:Female`
+
+**Exercise 8.10: View the current schema of the graph.**
+`call db.schema.visualization()`
+
+*Conforme visualizado na ferramenta:*
+![Exercise_8_10](images/exercicio_8_10.png)
+
+**Exercise 8.11: Add properties to a movie.**
+**Exercise 8.12: Retrieve an OlderMovie node to confirm the label and properties.**
+**Exercise 8.13: Add properties to the person, Robin Wright.**
+**Exercise 8.14: Retrieve an updated Person node.**
+**Exercise 8.15: Remove a property from a Movie node.**
+**Exercise 8.16: Retrieve the node to confirm that the property has been removed.**
+**Exercise 8.17: Remove a property from a Person node.**
+**Exercise 8.18: Retrieve the node to confirm that the property has been removed.**
