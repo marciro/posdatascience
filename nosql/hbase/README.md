@@ -25,7 +25,29 @@
 **Agora execute as seguintes operações:**
 
 
-1. **Adicione mais 2 italianos mantendo adicionando informações como data de nascimento nas informações pessoais e um atributo de anos deexperiência nas informações profissionais.**
+1. **Adicione mais 2 italianos mantendo adicionando informações como data de nascimento nas informações pessoais e um atributo de anos de experiência nas informações profissionais.**
+	
+	`hbase(main):003:0> count 'italians'`
+	`10 row(s)`
+	
+	*Sendo a quantidade de linhas de 10 registros, somando mais 1 nos próximos números
+	*Essa operação de count em termos de uso em produção não deve ser feito, pois é custosa e pode levar muito tempo para uma simples inserção de registros
+	*e somente funciona se a chave for um número sequencial, e está sendo utilizada somente para fins do exercício.
+	
+	`put 'italians', '11', 'personal-data:name', 'Luciano Pavarotti'`
+	`put 'italians', '11', 'personal-data:city', 'Modena'`
+	`put 'italians', '11', 'personal-data:birthdate', '12/10/1935'`
+	`put 'italians', '11', 'professional-data:role', 'Tenor'`
+	`put 'italians', '11', 'professional-data:salary', '9999999'`
+	`put 'italians', '11', 'professional-data:work_experience', '30'`
+	
+	`put 'italians', '12', 'personal-data:name', 'Andrea Bocelli'`
+	`put 'italians', '12', 'personal-data:city', 'Lajatico'`
+	`put 'italians', '12', 'personal-data:birthdate', '22/09/1958'`
+	`put 'italians', '12', 'professional-data:role', 'Cantor'`
+	`put 'italians', '12', 'professional-data:salary', '888888'`
+	`put 'italians', '12', 'professional-data:work_experience', '20'`
+
 2. **Adicione o controle de 5 versões na tabela de dados pessoais.**
 3. **Faça 5 alterações em um dos italianos.**
 4. **Com o operador get, verifique como o HBase armazenou o histórico.**
