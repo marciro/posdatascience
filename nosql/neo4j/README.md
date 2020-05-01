@@ -176,3 +176,26 @@
 **Exercise 5.12: Retrieve the movies that have at least 2 directors with other optional data.**
 
 `MATCH (m:Movie) WITH m, size((:Person)-[:DIRECTED]->(m)) AS directors WHERE directors >= 2 OPTIONAL MATCH (p:Person)-[:ACTED_IN]->(m) RETURN m.title, collect(p.name)`
+
+
+### Exercício 5
+
+**Exercise 6.1: Execute a query that returns duplicate records.**
+
+`MATCH (p:Person)-[:ACTED_IN]->(m:Movie) RETURN p`
+
+**Exercise 6.2: Modify the query to eliminate duplication.**
+
+`MATCH (p:Person)-[:ACTED_IN]->(m:Movie) RETURN DISTINCT p`
+
+**Exercise 6.3: Modify the query to eliminate more duplication.**
+
+`MATCH (p:Person)-[:ACTED_IN]->(m:Movie) WITH DISTINCT p RETURN p`
+
+**Exercise 6.4: Sort results returned.**
+
+`MATCH (p:Person)-[:ACTED_IN]->(m:Movie) RETURN DISTINCT p.name ORDER BY p.name`
+
+**Exercise 6.5: Retrieve the top 5 ratings and their associated movies.**
+
+ `MATCH (p:Person)-[r:REVIEWED]->(m:Movie) RETURN m.title, r.rating ORDER BY r.rating DESC LIMIT 5`
