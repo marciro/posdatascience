@@ -238,6 +238,7 @@
 
 `CREATE (:Person {name: 'Ian MacShane', born:1942})`
 
+ 
 **Exercise 8.4: Retrieve the newly-created node.**
 
 `MATCH (p:Person) WHERE p.name = 'Ian MacShane' RETURN p`
@@ -300,3 +301,51 @@
 **Exercise 8.18: Retrieve the node to confirm that the property has been removed.**
 
 `MATCH (p:Person) WHERE p.name = 'Robin Wright' return p`
+
+
+### Exercício 9
+
+**Exercise 9.1: Create ACTED_IN relationships.
+
+`MATCH (m:Movie) WHERE m.title = 'John Wick' MATCH (p:Person) WHERE p.name = 'Keanu Reeves' OR p.name = 'Ian MacShane' CREATE (p)-[:ACTED_IN]->(m)`
+
+**Exercise 9.2: Create DIRECTED relationships.
+
+`CREATE (:Person {name: 'Chad Stahelski', born:1968})`
+`MATCH (m:Movie) WHERE m.title = 'John Wick' MATCH (p:Person) WHERE p.name = 'Chad Stahelski' CREATE (p)-[:DIRECTED]->(m)`
+
+**Exercise 9.3: Create a HELPED relationship.
+
+`CREATE (:Person {name: 'David Leitch', born:1975})`
+`MATCH (m:Movie) WHERE m.title = 'John Wick' MATCH (p:Person) WHERE p.name = 'David Leitch' CREATE (p)-[:HELPED]->(m)`
+
+**Exercise 9.4: Query nodes and new relationships.
+
+`MATCH (p:Person)-[r]-(m:Movie) WHERE m.title = 'John Wick' RETURN p,r,m`
+
+**Exercise 9.5: Add properties to relationships.
+
+`MATCH (p:Person)-[rel:ACTED_IN]->(m:Movie) WHERE m.title = 'John Wick' SET rel.roles = CASE p.name WHEN 'Keanu Reeves' THEN ['John Wick'] WHEN 'Ian MacShane' THEN ['Wiston'] END`
+
+**Exercise 9.6: Add a property to the HELPED relationship.
+
+`MATCH (p:Person)-[rel:HELPED]->(m:Movie) WHERE p.name = 'David Leitch' AND m.title = 'John Wick' SET rel.type = 'stunt'`
+
+**Exercise 9.7: View the current list of property keys in the graph.
+
+`call db.propertyKeys`
+
+*Conforme visualizado na ferramenta:*
+![Exercise_9_7](images/exercicio_9_7.png)
+
+**Exercise 9.8: View the current schema of the graph.
+
+**Exercise 9.9: Retrieve the names and roles for actors.
+
+**Exercise 9.10: Retrieve information about any specific relationships.
+
+**Exercise 9.11: Modify a property of a relationship.
+
+**Exercise 9.12: Remove a property from a relationship.
+
+**Exercise 9.13: Confirm that your modifications were made to the graph.
