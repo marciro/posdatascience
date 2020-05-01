@@ -280,7 +280,7 @@
 
 **Exercise 8.13: Add properties to the person, Robin Wright.**
 
-`match(p:Person) where p.name = 'Robin Wright' SET p.born = 1966, p.birthPlace = 'Dallas'´
+`match(p:Person) where p.name = 'Robin Wright' SET p.born = 1966, p.birthPlace = 'Dallas'`
 
 **Exercise 8.14: Retrieve an updated Person node.**
 
@@ -364,3 +364,30 @@
 **Exercise 9.13: Confirm that your modifications were made to the graph.**
 
 `MATCH (p:Person)-[r:HELPED]-(m:Movie) where   r.type = 'film producer' return p`
+
+
+### Exercício 10
+
+**Exercise 10.1: Delete a relationship.
+
+ `MATCH (:Person)-[r:HELPED]-(:Person) DELETE r`
+
+**Exercise 10.2: Confirm that the relationship has been deleted.
+
+`MATCH (:Person)-[r:HELPED]-(:Person) RETURN r`
+
+**Exercise 10.3: Retrieve a movie and all of its relationships.
+
+`MATCH (p:Person)-[r]-(m:Movie) WHERE m.title = 'John Wick' RETURN p,type(r),m`
+
+**Exercise 10.4: Try deleting a node without detaching its relationships.
+
+`MATCH (m:Movie) WHERE m.title = 'John Wick' DELETE m`
+
+**Exercise 10.5: Delete a Movie node, along with its relationships.
+
+`MATCH (m:Movie) WHERE m.title = 'John Wick' DETACH DELETE m`
+
+**Exercise 10.6: Confirm that the Movie node has been deleted.
+
+`MATCH (p:Person)-[r]-(m:Movie) WHERE m.title = 'John Wick' RETURN p,type(r),m`
