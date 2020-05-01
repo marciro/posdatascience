@@ -178,7 +178,7 @@
 `MATCH (m:Movie) WITH m, size((:Person)-[:DIRECTED]->(m)) AS directors WHERE directors >= 2 OPTIONAL MATCH (p:Person)-[:ACTED_IN]->(m) RETURN m.title, collect(p.name)`
 
 
-### Exercício 5
+### Exercício 6
 
 **Exercise 6.1: Execute a query that returns duplicate records.**
 
@@ -203,3 +203,23 @@
 **Exercise 6.6: Retrieve all actors that have not appeared in more than 3 movies.**
 
 `MATCH (p:Person)-[r:ACTED_IN]->(m:Movie) WITH p as Ator, count(r) AS Atuações, collect(m.title) as Filmes WHERE Atuações <= 3 RETURN Ator.name, Atuações, Filmes ORDER BY Atuações DESC`
+
+
+### Exercício 7
+
+**Exercise 7.1: Collect and use lists.**
+
+`MATCH (p:Person)-[r:REVIEWED]->(m:Movie) WITH  p, collect(m.title) as reviews, avg(r.rating) AS Média, max(r.rating) AS Máxima RETURN p.name, reviews,Média,Máxima ORDER BY size(reviews)`
+
+**Exercise 7.2: Collect a list.**
+
+`MATCH (p:Person)-[:ACTED_IN]->(m:Movie) RETURN p.name as Ator, count(m) as Quantidade, collect(m.title) as Filmes`
+
+**Exercise 7.3: Unwind a list.**
+
+`match(a) UNWIND keys(a) AS key RETURN collect(distinct key)`
+
+**Exercise 7.4: Perform a calculation with the date type.**
+
+`MATCH (p:Person)-[:ACTED_IN]->(m:Movie) WHERE p.name = 'Keanu Reeves' AND m.title ='The Matrix' RETURN p.name,m.title, m.released, date().year-p.born  as IdadeAtualKeanuReeves, m.released-p.born AS IdadeKeanuReevesLancamento`
+
