@@ -263,16 +263,40 @@
 `MATCH (p:Female) REMOVE p:Female`
 
 **Exercise 8.10: View the current schema of the graph.**
+
 `call db.schema.visualization()`
 
 *Conforme visualizado na ferramenta:*
 ![Exercise_8_10](images/exercicio_8_10.png)
 
 **Exercise 8.11: Add properties to a movie.**
+
+`MATCH (m:Movie) WHERE m.title = 'John Wick' SET m:GoodMovie, m.released = 2014, m.tagline = "John Wick isn't the Boogeyman... He's the guy you send to kill the f*cking Boogeyman.", m.duration = 101`
+
 **Exercise 8.12: Retrieve an OlderMovie node to confirm the label and properties.**
+
+`MATCH (m:OlderMovie) WHERE m.title ="The Devil's Advocate" RETURN m`
+
 **Exercise 8.13: Add properties to the person, Robin Wright.**
+
+`match(p:Person) where p.name = 'Robin Wright' SET p.born = 1966, p.birthPlace = 'Dallas'´
+
 **Exercise 8.14: Retrieve an updated Person node.**
+
+`match(p:Person) where p.name = 'Robin Wright' return p`
+
 **Exercise 8.15: Remove a property from a Movie node.**
+
+`MATCH (m:Movie) WHERE m.title = 'John Wick' REMOVE m.tagline`
+
 **Exercise 8.16: Retrieve the node to confirm that the property has been removed.**
+
+`MATCH (m:Movie) WHERE m.title = 'John Wick' return m`
+
 **Exercise 8.17: Remove a property from a Person node.**
+
+`MATCH (p:Person) WHERE p.name = 'Robin Wright' REMOVE p.birthPlace`
+
 **Exercise 8.18: Retrieve the node to confirm that the property has been removed.**
+
+`MATCH (p:Person) WHERE p.name = 'Robin Wright' return p`
