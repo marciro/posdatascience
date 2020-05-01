@@ -6,7 +6,7 @@
 
 **Exercise 1.1: Retrieve all nodes from the database.**
 
-	`match(n) return (n)`
+`match(n) return (n)`
 
 **Exercise 1.2: Examine the data model for the graph.**
 
