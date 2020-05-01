@@ -368,26 +368,26 @@
 
 ### Exercício 10
 
-**Exercise 10.1: Delete a relationship.
+**Exercise 10.1: Delete a relationship.**
 
  `MATCH (:Person)-[r:HELPED]-(:Person) DELETE r`
 
-**Exercise 10.2: Confirm that the relationship has been deleted.
+**Exercise 10.2: Confirm that the relationship has been deleted.**
 
 `MATCH (:Person)-[r:HELPED]-(:Person) RETURN r`
 
-**Exercise 10.3: Retrieve a movie and all of its relationships.
+**Exercise 10.3: Retrieve a movie and all of its relationships.**
 
 `MATCH (p:Person)-[r]-(m:Movie) WHERE m.title = 'John Wick' RETURN p,type(r),m`
 
-**Exercise 10.4: Try deleting a node without detaching its relationships.
+**Exercise 10.4: Try deleting a node without detaching its relationships.**
 
 `MATCH (m:Movie) WHERE m.title = 'John Wick' DELETE m`
 
-**Exercise 10.5: Delete a Movie node, along with its relationships.
+**Exercise 10.5: Delete a Movie node, along with its relationships.**
 
 `MATCH (m:Movie) WHERE m.title = 'John Wick' DETACH DELETE m`
 
-**Exercise 10.6: Confirm that the Movie node has been deleted.
+**Exercise 10.6: Confirm that the Movie node has been deleted.**
 
 `MATCH (p:Person)-[r]-(m:Movie) WHERE m.title = 'John Wick' RETURN p,type(r),m`
