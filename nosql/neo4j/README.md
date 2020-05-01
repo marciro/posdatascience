@@ -135,22 +135,44 @@
 
 **Exercise 5.1: Retrieve data using multiple MATCH patterns.**
 
+`MATCH (main:Person)-[:ACTED_IN]->(m:Movie)<-[:DIRECTED]-(d:Person), (support:Person)-[:ACTED_IN]->(m),(support)-[:ACTED_IN]->(m2:Movie)<-[:DIRECTED]-(d)  WHERE main.name = 'Keanu Reeves' RETURN main,support,d`
+
 **Exercise 5.2: Retrieve particular nodes that have a relationship.**
+
+`MATCH (p:Person)-[:FOLLOWS]->(p2:Person),(p)-[:REVIEWED]->(m:Movie) WHERE m.title = 'The Da Vinci Code' return p,p2`
 
 **Exercise 5.3: Modify the query to retrieve nodes that are exactly three hops away.**
 
+`MATCH (p:Person)-[:FOLLOWS*3]->(p2:Person),(p)-[:REVIEWED]->(m:Movie) WHERE m.title = 'The Da Vinci Code' return p,p2`
+
 **Exercise 5.4: Modify the query to retrieve nodes that are one and two hops away.**
+
+`MATCH (p:Person)-[:FOLLOWS*1..2]->(p2:Person),(p)-[:REVIEWED]->(m:Movie) WHERE m.title = 'The Da Vinci Code' return p,p2`
 
 **Exercise 5.5: Modify the query to retrieve particular nodes that are connected no matter how many hops are required.**
 
+`MATCH (p:Person)-[:FOLLOWS*]->(p2:Person),(p)-[:REVIEWED]->(m:Movie) WHERE m.title = 'The Da Vinci Code' return p,p2`
+
 **Exercise 5.6: Specify optional data to be retrieved during the query.**
+
+`MATCH (p:Person)-[:FOLLOWS*]->(p2:Person),(p)-[:REVIEWED]->(m:Movie) OPTIONAL MATCH (p2)-[:ACTED_IN]->(:Movie) WHERE m.title = 'The Da Vinci Code' return p,p2`
 
 **Exercise 5.7: Retrieve nodes by collecting a list.**
 
+`MATCH (p:Person)-[:ACTED_IN]->(m:Movie), (p)-[:DIRECTED]->(m2:Movie) RETURN p.name as Ator, collect(m.title) as Atuações, collect(m2.title) as Direções`
+
 **Exercise 5.9: Retrieve nodes as lists and return data associated with the corresponding lists.**
+
+`MATCH (p:Person)-[:ACTED_IN]->(m:Movie) RETURN p.name as Ator, count(m) as Quantidade, collect(m.title) as Filmes`
 
 **Exercise 5.10: Retrieve nodes and their relationships as lists.**
 
+`MATCH (p:Person)-[r]->(m:Movie) RETURN p.name as Ator, collect(distinct(type(r)))`
+
 **Exercise 5.11: Retrieve the actors who have acted in exactly five movies.**
 
+`MATCH (p:Person)-[:ACTED_IN]->(m:Movie) WITH p,count(m) as movies WHERE movies = 5 return p`
+
 **Exercise 5.12: Retrieve the movies that have at least 2 directors with other optional data.**
+
+`MATCH (m:Movie) WITH m, size((:Person)-[:DIRECTED]->(m)) AS directors WHERE directors >= 2 OPTIONAL MATCH (p:Person)-[:ACTED_IN]->(m) RETURN m.title, collect(p.name)`
