@@ -1,6 +1,6 @@
 # Atividade da Disciplina de Bancos de dados não relacionais
 
-## HBase'
+## HBase
 
 ### Exercício 1
 
@@ -21,7 +21,8 @@
 
 
 
-### Exercício 1
+### Exercício 2
+
 **Agora execute as seguintes operações:**
 
 
@@ -47,11 +48,76 @@
 	`put 'italians', '12', 'professional-data:work_experience', '20'`  
 
 2. **Adicione o controle de 5 versões na tabela de dados pessoais.**
+	
+	`hbase(main):018:0> alter 'italians', NAME => 'personal-data', VERSIONS => 5´
+	`Updating all regions with the new schema...´
+	`1/1 regions updated.´
+	`Done.´
+	`Took 2.5064 seconds´
+	
 3. **Faça 5 alterações em um dos italianos.**
-4. **Com o operador get, verifique como o HBase armazenou o histórico.**
-5. **Utilize o scan para mostrar apenas o nome e profissão dos italianos.**
-6. **Apague os italianos com row id ímpar.**
-7. **Crie um contador de idade 55 para o italiano de row id 5.**
-8. **Incremente a idade do italiano em 1.**
 
+	`put 'italians', '12', 'personal-data:name', 'Placido Domigo'`
+	`put 'italians', '12', 'personal-data:city', 'Madrid'`
+	`put 'italians', '12', 'personal-data:birthdate', '21/01/1941'`
+	`put 'italians', '12', 'professional-data:salary', '9999991'`
+	`put 'italians', '12', 'professional-data:work_experience', '28'`
+
+4. **Com o operador get, verifique como o HBase armazenou o histórico.**
+	
+	`get 'italians', '12', {COLUMN => 'personal-data:name', VERSIONS => 5}`
+	
+	`hbase(main):025:0> get 'italians', '12', {COLUMN => 'personal-data:name', VERSIONS => 5}`
+	`COLUMN                                      CELL`
+	`personal-data:name                         timestamp=1588342332489, value=Placido Domigo`
+	`personal-data:name                         timestamp=1588341656043, value=Andrea Bocelli`
+	`1 row(s)`
+	`Took 0.0349 seconds`
+	
+	`get 'italians', '12', {COLUMN => 'personal-data:city', VERSIONS => 5}`
+	`get 'italians', '12', {COLUMN => 'personal-data:birthdate', VERSIONS => 5}`
+	`get 'italians', '12', {COLUMN => 'professional-data:salary', VERSIONS => 5}`
+	`get 'italians', '12', {COLUMN => 'professional-data:work_experience', VERSIONS => 5}`
+
+5. **Utilize o scan para mostrar apenas o nome e profissão dos italianos.**
+
+	`scan 'italians', { COLUMNS => ['personal-data:name', 'professional-data:role'] }`
+	
+6. **Apague os italianos com row id ímpar.**
+	
+	`deleteall 'italians', '1'`
+	`deleteall 'italians', '3'`
+	`deleteall 'italians', '5'`
+	`deleteall 'italians', '7'`
+	`deleteall 'italians', '9'`
+	`deleteall 'italians', '11'`
+
+7. **Crie um contador de idade 55 para o italiano de row id 5.**
+	
+	`put 'italians', '5', 'personal-data:name', 'Zucchero Fornaciari'
+	`put 'italians', '5', 'personal-data:city', 'Roncocesi' 	
+	`put 'italians', '5', 'personal-data:birthdate', '29/04/1965'
+	`incr 'italians','5', 'personal-data:age', 55
+	
+	`hbase(main):002:0> put 'italians', '5', 'personal-data:name', 'Zucchero Fornaciari'`
+	`Took 0.0439 seconds`
+	`hbase(main):003:0> put 'italians', '5', 'personal-data:city', 'Roncocesi' Display all 608 possibilities? (y or n)`
+	`hbase(main):003:0> put 'italians', '5', 'personal-data:city', 'Roncocesi'`
+	`Took 0.0093 seconds`
+	`hbase(main):004:0> put 'italians', '5', 'personal-data:city', 'Roncocesi'`
+	`Took 0.0074 seconds`
+	`hbase(main):005:0> put 'italians', '5', 'personal-data:birthdate', '29/04/1965'`
+	`Took 0.0118 seconds`
+	`hbase(main):006:0> incr 'italians','5', 'personal-data:age', 55`
+	`COUNTER VALUE = 55`
+	`Took 0.0376 seconds`
+	`hbase(main):007:0>`
+	
+8. **Incremente a idade do italiano em 1.**
+	
+	`incr 'italians', '5', 'personal-data:age'`
+	
+	`hbase(main):007:0> incr 'italians', '5', 'personal-data:age'`
+	`COUNTER VALUE = 56`
+	`Took 0.0102 seconds`
 
