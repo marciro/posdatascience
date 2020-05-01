@@ -355,11 +355,11 @@
 
 **Exercise 9.11: Modify a property of a relationship.**
 
-`MATCH (p:Person)-[r:HELPED]-(m:Movie) set r.type = 'film producer'´
+`MATCH (p:Person)-[r:HELPED]-(m:Movie) set r.type = 'film producer'`
 
 **Exercise 9.12: Remove a property from a relationship.**
 
-`MATCH (p:Person)-[r:HELPED]-(m:Movie) remove r.type´
+`MATCH (p:Person)-[r:HELPED]-(m:Movie) remove r.type`
 
 **Exercise 9.13: Confirm that your modifications were made to the graph.**
 
