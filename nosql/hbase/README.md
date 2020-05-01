@@ -30,9 +30,7 @@
 	`hbase(main):003:0> count 'italians'`
 	`10 row(s)`
 	
-	*Sendo a quantidade de linhas de 10 registros, somando mais 1 nos próximos números
-	*Essa operação de count em termos de uso em produção não deve ser feito, pois é custosa e pode levar muito tempo para uma simples inserção de registros
-	*e somente funciona se a chave for um número sequencial, e está sendo utilizada somente para fins do exercício.
+	*Sendo a quantidade de linhas de 10 registros, somando mais 1 nos próximos números.  Essa operação de count em termos de uso em produção não deve ser feito, pois é custosa e pode levar muito tempo para uma simples inserção de registros e somente funciona se a chave for um número sequencial, e está sendo utilizada somente para fins do exercício.*
 	
 	`put 'italians', '11', 'personal-data:name', 'Luciano Pavarotti'`  
 	`put 'italians', '11', 'personal-data:city', 'Modena'`  
